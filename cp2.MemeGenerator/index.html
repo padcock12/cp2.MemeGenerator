@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Creative Project 2</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+<body>
+    <div class='menu-container'>
+      <div class='menu'>
+        <div class='date'>Your Very Own Meme Template Generator</div>
+        <div class='links'>
+        <div class='signup'>Sign Up</div>
+        <div class='login'>Login</div>
+        </div>
+      </div>
+    </div>
+    
+  <p>Please Pick a Number 1-100</p>
+  <input id="memeInput" type="text"></input><br/>
+  <input id="memeSubmit" type="submit" value="Submit"></input>
+  <div class="parent">
+  <div id="memeResults"></div>
+  </div>
+  
+  <div class="footer">
+    <a href=""></a>
+  </div>
+</body>
+
+<script>
+document.getElementById("memeSubmit").addEventListener("click", function(event) {
+  let value = document.getElementById("memeInput").value;
+  if(value < 0 || value > 100) {
+      return;
+  }
+  value = value-1;
+  var myurl = "https://api.imgflip.com/get_memes";
+  console.log(myurl);
+  fetch(myurl, {mode: 'cors'})
+    .then(function(response) {
+      console.log(response);
+      return response.json();
+    }).then(function(json) {
+      console.log("This is the json");
+      console.log(json);
+      console.log(json.data.memes[value].id);
+      let results = "";
+        results+= "<h2>Meme Template Title: " + json.data.memes[value].name + "</h2>";
+        results+= '<img src="' + json.data.memes[value].url + '">';
+        
+      document.getElementById("memeResults").innerHTML = results;
+    });
+});
+    
+    
+    //const data = document.createTextNode(json["data"]);
+      //const fact = document.createTextNode(json.data.memes[i].name);
+      //const container = document.getElementById("memeTitle");
+      //container.textContent = "";
+      //container.appendChild(fact);
+</script>
+</html>
+
